@@ -1,0 +1,30 @@
+version: '3.4'
+services:
+ mysql:
+  image: mysql:8.0.24
+#  command: --default-authentication-plugin=mysql_native_password
+  environment:
+   MYSQL_ROOT_PASSWORD: root
+  ports:
+   - 3307:3306
+  volumes:
+   - ./vols/mysql/data/:/var/lib/mysql/
+  user: 1000:1000
+ adminer:
+  image: adminer:4.8.1-standalone    
+  environment:   
+   ADMINER_DEFAULT_SERVER: mysql
+  ports:
+   - 8080:8080
+ app:
+  image: app
+  build: 
+   context: .   
+   #can pass args also if needed
+  volumes:
+    - ./src:/app 
+  ports: 
+   - 5000:8000
+
+   
+
